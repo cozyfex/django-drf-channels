@@ -26,10 +26,15 @@ uv pip install <package-name>
 
 ```shell
 # Single worker
-gunicorn settings.wsgi:application
+gunicorn project.wsgi:application
 
 # Multiple workers
 gunicorn --workers=$(python -c "import multiprocessing as mp; print(mp.cpu_count() * 2 + 1)") settings.wsgi:application
 ```
 
+## Migrate
+
+```shell
+python manage.py migrate
+```
 
