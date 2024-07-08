@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+from corsheaders.defaults import default_headers, default_methods
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -30,7 +31,9 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG'))
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS
+allowed_hosts = os.environ.get('ALLOWED_HOSTS')
+ALLOWED_HOSTS = allowed_hosts.split(',')
 
 # Application definition
 
@@ -45,9 +48,7 @@ DJANGO_APPS = [
 
 DJANGO_EXTRA_APPS = []
 
-THIRD_PARTY_APP = [
-    'rest_framework',
-]
+THIRD_PARTY_APP = ['rest_framework', 'corsheaders']
 
 PROJECT_APPS = []
 
@@ -56,6 +57,7 @@ INSTALLED_APPS = DJANGO_APPS + DJANGO_EXTRA_APPS + THIRD_PARTY_APP + PROJECT_APP
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # django-cors-headers
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,3 +148,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+# django-cors-headers
+cors_allowed_origins = os.environ.get('CORS_ALLOWED_ORIGINS')
+CORS_ALLOWED_ORIGINS = cors_allowed_origins.split(',')
+
+csrf_trusted_origins = os.environ.get('CSRF_TRUSTED_ORIGINS')  # CSRF with CORS
+CSRF_TRUSTED_ORIGINS = csrf_trusted_origins.split(',')
+
+CORS_ALLOW_METHODS = (*default_methods,)
+CORS_ALLOW_HEADERS = (*default_headers,)
