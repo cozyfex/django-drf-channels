@@ -2,6 +2,7 @@
 #    uv pip compile - -o requirements.txt
 asgiref==3.8.1
     # via django
+boltons==24.0.0
 colorama==0.4.6
 django==5.0.6
     # via
@@ -17,3 +18,4 @@ python-dotenv==1.0.1
 ruff==0.5.0
 sqlparse==0.5.0
     # via django
+ulid-py==1.1.0
