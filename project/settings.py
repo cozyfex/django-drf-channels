@@ -48,7 +48,7 @@ DJANGO_APPS = [
 
 DJANGO_EXTRA_APPS = []
 
-THIRD_PARTY_APP = ['rest_framework', 'corsheaders']
+THIRD_PARTY_APP = ['rest_framework', 'corsheaders', 'django_filters']
 
 PROJECT_APPS = []
 
