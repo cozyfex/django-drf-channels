@@ -20,6 +20,12 @@ uv pip freeze | uv pip compile - -o requirements.txt
 uv pip install <package-name>
 ```
 
+## Migrate
+
+```shell
+python manage.py migrate
+```
+
 ## gunicorn - WSGI(Web Server Gateway Interface)
 
 ### Run command
@@ -32,9 +38,21 @@ gunicorn project.wsgi:application
 gunicorn --workers=$(python -c "import multiprocessing as mp; print(mp.cpu_count() * 2 + 1)") settings.wsgi:application
 ```
 
-## Migrate
+## daphne - ASGI(Asynchronous Server Gateway Interface)
+
+### Run command
 
 ```shell
-python manage.py migrate
+# Single worker
+daphne -p 8001 project.asgi:application
+
+# Multiple workers
+daphne -u $(python -c "import multiprocessing as mp; print(mp.cpu_count())") -p 8001 project.asgi:application
+```
+
+## Run deploy script
+
+```shell
+python deploy/start_servers.py
 ```
 

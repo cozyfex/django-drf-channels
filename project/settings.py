@@ -53,6 +53,8 @@ THIRD_PARTY_APP = [
     'corsheaders',
     'django_filters',
     'rest_framework_simplejwt',
+    'daphne',
+    'channels',
 ]
 
 PROJECT_APPS = []
@@ -87,6 +89,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ASGI_APPLICATION = 'project.asgi.application'
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
@@ -164,3 +168,13 @@ CSRF_TRUSTED_ORIGINS = csrf_trusted_origins.split(',')
 
 CORS_ALLOW_METHODS = (*default_methods,)
 CORS_ALLOW_HEADERS = (*default_headers,)
+
+# Channels Layer
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
+}
