@@ -58,7 +58,7 @@ THIRD_PARTY_APP = [
     'channels',
 ]
 
-PROJECT_APPS = ['core']
+PROJECT_APPS = ['core', 'api.user']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APP + DJANGO_EXTRA_APPS + PROJECT_APPS
 
@@ -158,8 +158,11 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # djangorestframework-simplejwt
-    ]
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
 # django-cors-headers
@@ -180,4 +183,9 @@ CHANNEL_LAYERS = {
             'hosts': [('127.0.0.1', 6379)],
         },
     },
+}
+
+# JWT
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'user_id',
 }
