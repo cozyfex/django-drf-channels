@@ -37,7 +37,7 @@ ALLOWED_HOSTS = allowed_hosts.split(',')
 
 # Application definition
 
-DJANGO_APPS = [
+DJANGO_BEFORE_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,11 +45,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
 ]
 
-DJANGO_EXTRA_APPS = [
-    'django.contrib.staticfiles',
-]
-
-THIRD_PARTY_APP = [
+THIRD_PARTY_BEFORE_APP = [
     'rest_framework',
     'corsheaders',
     'django_filters',
@@ -58,9 +54,23 @@ THIRD_PARTY_APP = [
     'channels',
 ]
 
+DJANGO_AFTER_APPS = [
+    'django.contrib.staticfiles',
+]
+
+THIRD_PARTY_AFTER_APP = [
+    'drf_yasg',
+]
+
 PROJECT_APPS = ['core', 'api.user']
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APP + DJANGO_EXTRA_APPS + PROJECT_APPS
+INSTALLED_APPS = (
+    DJANGO_BEFORE_APPS
+    + THIRD_PARTY_BEFORE_APP
+    + DJANGO_AFTER_APPS
+    + THIRD_PARTY_AFTER_APP
+    + PROJECT_APPS
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
