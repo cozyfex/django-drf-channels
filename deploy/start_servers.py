@@ -1,9 +1,20 @@
+import argparse
 import multiprocessing
 import subprocess
 
 
 def get_cpu_count():
-    return multiprocessing.cpu_count()
+    parser = argparse.ArgumentParser(
+        description='Example script with optional arguments.'
+    )
+    parser.add_argument(
+        '--single', type=bool, default=False, help='Single mode (default: False)'
+    )
+    args = parser.parse_args()
+    if args.single:
+        return 1
+    else:
+        return multiprocessing.cpu_count()
 
 
 def start_gunicorn():

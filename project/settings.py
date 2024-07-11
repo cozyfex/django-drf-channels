@@ -43,10 +43,11 @@ DJANGO_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 ]
 
-DJANGO_EXTRA_APPS = []
+DJANGO_EXTRA_APPS = [
+    'django.contrib.staticfiles',
+]
 
 THIRD_PARTY_APP = [
     'rest_framework',
@@ -57,9 +58,9 @@ THIRD_PARTY_APP = [
     'channels',
 ]
 
-PROJECT_APPS = []
+PROJECT_APPS = ['core']
 
-INSTALLED_APPS = DJANGO_APPS + DJANGO_EXTRA_APPS + THIRD_PARTY_APP + PROJECT_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APP + DJANGO_EXTRA_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -103,6 +104,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTH_USER_MODEL = 'core.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
