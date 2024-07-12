@@ -8,7 +8,7 @@ def get_cpu_count():
     return multiprocessing.cpu_count()
 
 
-def start_gunicorn(is_single=False, http_port=8000):
+def start_gunicorn(is_single=False, port=8000):
     cpu_count = 1 if is_single else get_cpu_count()
     workers = 2 * cpu_count + 1
     command = [
@@ -17,12 +17,12 @@ def start_gunicorn(is_single=False, http_port=8000):
         '--workers',
         str(workers),
         '--bind',
-        f'0.0.0.0:{http_port}',
+        f'0.0.0.0:{port}',
     ]
     subprocess.Popen(command)
 
 
-def start_daphne(websocket_port=8001):
+def start_daphne(port=8001):
     cpu_count = get_cpu_count()
     workers = cpu_count  # Adjust if needed based on your application's characteristics
     command = [
@@ -30,7 +30,7 @@ def start_daphne(websocket_port=8001):
         '-u',
         str(workers),
         '-p',
-        f'{websocket_port}',
+        f'{port}',
         'project.asgi:application',
     ]
     subprocess.Popen(command)
