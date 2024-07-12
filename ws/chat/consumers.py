@@ -22,8 +22,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     async def receive(self, text_data: Any = None, bytes_data: Any = None):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        try:
+            text_data_json = json.loads(text_data)
+            message = text_data_json['message']
+        except (Exception,):
+            message = 'Error: Invalid message.'
 
         await self.channel_layer.group_send(
             self.room_group_name, {'type': 'chat_message', 'message': message}

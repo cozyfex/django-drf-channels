@@ -62,7 +62,7 @@ THIRD_PARTY_AFTER_APP = [
     'drf_yasg',
 ]
 
-PROJECT_APPS = ['core', 'api.user']
+PROJECT_APPS = ['core', 'api.user', 'ws.chat']
 
 INSTALLED_APPS = (
     DJANGO_BEFORE_APPS
@@ -186,11 +186,13 @@ CORS_ALLOW_METHODS = (*default_methods,)
 CORS_ALLOW_HEADERS = (*default_headers,)
 
 # Channels Layer
+CHANNELS_REDIS_SERVER = os.environ.get('CHANNELS_REDIS_SERVER')
+CHANNELS_REDIS_PORT = os.environ.get('CHANNELS_REDIS_PORT')
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],
+            'hosts': [(CHANNELS_REDIS_SERVER, CHANNELS_REDIS_PORT)],
         },
     },
 }
