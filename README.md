@@ -11,7 +11,11 @@ uv pip install -r requirements.txt
 ### Update requirements.txt
 
 ```shell
-uv pip freeze | grep -v "install==1.3.5" | uv pip compile - -o requirements.txt
+uv pip freeze | grep -v "install==1.3.5" | uv pip compile /dev/stdin -o requirements.txt && sed 's/zope-interface==/zope.interface==/g' requirements.txt > requirements.tmp && mv requirements.tmp requirements.txt
+
+# or
+
+./deploy/gen_requirements.sh
 ```
 
 ### Install new package
