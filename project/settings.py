@@ -32,7 +32,7 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY'))
 DEBUG = bool(os.environ.get('DEBUG'))
 
 # ALLOWED_HOSTS
-allowed_hosts = os.environ.get('ALLOWED_HOSTS')
+allowed_hosts = os.environ.get('ALLOWED_HOSTS', '')
 ALLOWED_HOSTS = allowed_hosts.split(',')
 
 # Application definition
@@ -176,10 +176,10 @@ REST_FRAMEWORK = {
 }
 
 # django-cors-headers
-cors_allowed_origins = os.environ.get('CORS_ALLOWED_ORIGINS')
+cors_allowed_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
 CORS_ALLOWED_ORIGINS = cors_allowed_origins.split(',')
 
-csrf_trusted_origins = os.environ.get('CSRF_TRUSTED_ORIGINS')  # CSRF with CORS
+csrf_trusted_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')  # CSRF with CORS
 CSRF_TRUSTED_ORIGINS = csrf_trusted_origins.split(',')
 
 CORS_ALLOW_METHODS = (*default_methods,)
