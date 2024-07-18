@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY . /app/
 
+RUN rm -f .env
+RUN rm -f .env.sample
+
 SHELL ["/bin/bash", "-c"]
 
 RUN pip install uv

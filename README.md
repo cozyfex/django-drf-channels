@@ -11,7 +11,7 @@ uv pip install -r requirements.txt
 ### Update requirements.txt
 
 ```shell
-uv pip freeze | uv pip compile - -o requirements.txt
+uv pip freeze | grep -v "install==1.3.5" | uv pip compile - -o requirements.txt
 ```
 
 ### Install new package
