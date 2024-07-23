@@ -64,13 +64,13 @@ if __name__ == '__main__':
     http_port = HTTP_PORT if HTTP_PORT else args.http_port
     websocket_port = WEBSOCKET_PORT if WEBSOCKET_PORT else args.websocket_port
 
-    # Start Gunicorn
-    print('Starting Gunicorn...')
-    start_gunicorn(single, http_port)
-
     # Start Daphne
     print('Starting Daphne...')
     start_daphne(websocket_port)
+
+    # Start Gunicorn
+    print('Starting Gunicorn...')
+    start_gunicorn(single, http_port)
 
     # Keep the script running to keep both servers alive
     try:
