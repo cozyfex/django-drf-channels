@@ -59,6 +59,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Created at')
+    updated_at = models.DateTimeField(null=True, verbose_name='Updated at')
+
     objects = CustomUserManager()
 
     def __str__(self):
