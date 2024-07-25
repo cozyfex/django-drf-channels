@@ -200,11 +200,20 @@ CORS_ALLOW_HEADERS = (*default_headers,)
 # Channels Layer
 CHANNELS_REDIS_SERVER = os.environ.get('CHANNELS_REDIS_SERVER')
 CHANNELS_REDIS_PORT = os.environ.get('CHANNELS_REDIS_PORT')
+CHANNELS_REDIS_DB = os.environ.get('CHANNELS_REDIS_DB', 0)
+CHANNELS_REDIS_PASSWORD = os.environ.get('CHANNELS_REDIS_PASSWORD', None)
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [(CHANNELS_REDIS_SERVER, CHANNELS_REDIS_PORT)],
+            'hosts': [
+                (
+                    CHANNELS_REDIS_SERVER,
+                    CHANNELS_REDIS_PORT,
+                    CHANNELS_REDIS_DB,
+                    CHANNELS_REDIS_PASSWORD,
+                )
+            ],
         },
     },
 }

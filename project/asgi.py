@@ -7,15 +7,37 @@ For more information on this file, see
 https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
 """
 
+import logging
 import os
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
+from redis import Redis, RedisError
 
 import ws.chat.routing
+from project import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+
+logger = logging.getLogger(__name__)
+
+
+def check_redis_connection():
+    try:
+        redis_client = Redis(
+            host=settings.CHANNELS_REDIS_SERVER,
+            port=settings.CHANNELS_REDIS_PORT,
+            password=settings.CHANNELS_REDIS_PASSWORD,
+            db=settings.CHANNELS_REDIS_DB,
+        )
+        redis_client.ping()
+        logger.info('Redis server is available!')
+    except RedisError as e:
+        logger.error('Redis server is not available: ' + str(e))
+
+
+check_redis_connection()
 
 application = ProtocolTypeRouter(
     {
