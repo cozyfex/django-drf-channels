@@ -13,6 +13,7 @@ import os
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
+from django.urls import re_path
 from redis import Redis, RedisError
 
 import ws.chat.routing
@@ -21,6 +22,16 @@ from project import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 
 logger = logging.getLogger(__name__)
+
+
+async def health_check(scope, receive, send):
+    if scope['type'] == 'http' and scope['path'] == '/check/':
+        headers = [(b'content-type', b'application/json')]
+        body = b'{"status": "ok"}'
+        await send({'type': 'http.response.start', 'status': 200, 'headers': headers})
+        await send({'type': 'http.response.body', 'body': body})
+    else:
+        await django_asgi_app(scope, receive, send)
 
 
 def check_redis_connection():
@@ -39,9 +50,16 @@ def check_redis_connection():
 
 check_redis_connection()
 
+django_asgi_app = get_asgi_application()
+
 application = ProtocolTypeRouter(
     {
-        'http': get_asgi_application(),
+        'http': URLRouter(
+            [
+                re_path(r'^check/$', health_check),  # Add health check route
+                re_path(r'', django_asgi_app),
+            ]
+        ),
         'websocket': AuthMiddlewareStack(
             URLRouter(ws.chat.routing.websocket_urlpatterns)
         ),

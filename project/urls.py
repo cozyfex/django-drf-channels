@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -48,7 +48,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     # check
-    path('check/', lambda request: HttpResponse('OK', status=200)),
+    path('check/', lambda request: JsonResponse({'status': 'ok'}, status=200)),
     # djangorestframework
     path('api/auth/', include('rest_framework.urls')),
     # djangorestframework-simplejwt
