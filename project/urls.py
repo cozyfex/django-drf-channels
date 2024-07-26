@@ -48,7 +48,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     # check
-    path('check/', lambda request: JsonResponse({'status': 'ok'}, status=200)),
+    path('check/', lambda request: JsonResponse({'status': 'http ok'}, status=200)),
     # djangorestframework
     path('api/auth/', include('rest_framework.urls')),
     # djangorestframework-simplejwt

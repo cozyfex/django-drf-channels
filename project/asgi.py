@@ -25,9 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 async def health_check(scope, receive, send):
-    if scope['type'] == 'http' and scope['path'] == '/check/':
+    if scope['type'] == 'http' and scope['path'] == '/ws/check/':
         headers = [(b'content-type', b'application/json')]
-        body = b'{"status": "ok"}'
+        body = b'{"status": "web socket ok"}'
         await send({'type': 'http.response.start', 'status': 200, 'headers': headers})
         await send({'type': 'http.response.body', 'body': body})
     else:
@@ -56,7 +56,7 @@ application = ProtocolTypeRouter(
     {
         'http': URLRouter(
             [
-                re_path(r'^check/$', health_check),  # Add health check route
+                re_path(r'^ws/check/$', health_check),  # Add health check route
                 re_path(r'', django_asgi_app),
             ]
         ),
