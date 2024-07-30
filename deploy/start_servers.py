@@ -18,6 +18,8 @@ def start_gunicorn(is_single=False, port=8000):
         str(workers),
         '--bind',
         f'0.0.0.0:{port}',
+        '--timeout',
+        '120',
     ]
     subprocess.Popen(command)
 
@@ -29,6 +31,8 @@ def start_daphne(port=8001):
         'daphne',
         '-u',
         str(workers),
+        '-b',
+        '0.0.0.0',
         '-p',
         f'{port}',
         'project.asgi:application',
