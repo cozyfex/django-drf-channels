@@ -222,3 +222,10 @@ CHANNEL_LAYERS = {
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'user_id',
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {'type': 'basic'},
+        'Bearer': {'type': 'apiKey', 'name': 'Authorization', 'in': 'header'},
+    }
+}
